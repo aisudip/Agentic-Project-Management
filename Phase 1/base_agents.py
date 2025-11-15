@@ -7,12 +7,20 @@ import csv
 import uuid
 from datetime import datetime
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+openai_api_key = os.getenv("OPENAI_API_KEY")
+print(openai_api_key[:8] + "..." if openai_api_key else "Key not found")
+
 client = OpenAI(
     # Change the base_url when using the Vocareum API endpoint
     # If using the OpenAI API endpoint, you can comment out the base_url line
-    base_url="https://openai.vocareum.com/v1",
+    base_url = "https://openai.vocareum.com/v1",
     # Uncomment one of the following
-    api_key="voc-1391141131160736404181968adf2fc3c2bb4.48075693",  # <--- TODO: Fill in your Vocareum API key here
+    api_key = openai_api_key
     # api_key=os.getenv(
     #     "OPENAI_API_KEY"
     # ),  # <-- Alternately, set as an environment variable
@@ -277,6 +285,7 @@ class EvaluationAgent:
             api_key=self.openai_api_key
         )
         prompt_to_evaluate = initial_prompt
+        final_worker_response = None
 
         for i in range(self.max_interactions):# TODO: 2 - Set loop to iterate up to the maximum number of interactions:
             print(f"\n--- Interaction {i+1} ---")
@@ -307,6 +316,7 @@ class EvaluationAgent:
             print(" Step 3: Check if evaluation is positive")
             if evaluation.lower().startswith("yes"):
                 print("✅ Final solution accepted.")
+                final_worker_response = response_from_worker
                 break
             else:
                 print(" Step 4: Generate instructions to correct the response")
@@ -334,7 +344,7 @@ class EvaluationAgent:
                 )
         return {
             # TODO: 7 - Return a dictionary containing the final response, evaluation, and number of iterations
-            "final response": response.choices[0].message.content,
+            "final response": final_worker_response,
             "evaluation": evaluation,
             "number of iterations": i + 1
         }   

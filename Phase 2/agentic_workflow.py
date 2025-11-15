@@ -181,7 +181,8 @@ def development_engineer_support_function(input_query):
 print("\n*** Workflow execution started ***\n")
 # Workflow Prompt
 # ****
-workflow_prompt = "What would the development tasks for this product be?"
+#workflow_prompt = "What would the development tasks for this product be?"
+workflow_prompt = "Create a comprehensive project plan for the Email Router product including user stories, key features, and development tasks."
 # ****
 print(f"Task to complete in this workflow, workflow prompt = {workflow_prompt}")
 
