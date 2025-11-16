@@ -148,7 +148,7 @@ def product_manager_support_function(input_query):
     response_from_knowledge_agent = product_manager_knowledge_agent.respond(input_query)
 
     # 3. Have the response evaluated by the corresponding Evaluation Agent.
-    eval_result = product_manager_evaluation_agent.evaluate(response_from_knowledge_agent)
+    eval_result = product_manager_evaluation_agent.evaluate(input_query)
 
     # 4. Return the final validated response.
     return eval_result['final response']
@@ -159,7 +159,7 @@ def program_manager_support_function(input_query):
     response_from_knowledge_agent = program_manager_knowledge_agent.respond(input_query)
 
     # 3. Have the response evaluated by the corresponding Evaluation Agent.
-    eval_result = program_manager_evaluation_agent.evaluate(response_from_knowledge_agent)
+    eval_result = program_manager_evaluation_agent.evaluate(input_query)
 
     # 4. Return the final validated response.
     return eval_result['final response']
@@ -170,7 +170,7 @@ def development_engineer_support_function(input_query):
     response_from_knowledge_agent = development_engineer_knowledge_agent.respond(input_query)
 
     # 3. Have the response evaluated by the corresponding Evaluation Agent.
-    eval_result = development_engineer_evaluation_agent.evaluate(response_from_knowledge_agent)
+    eval_result = development_engineer_evaluation_agent.evaluate(input_query)
 
     # 4. Return the final validated response.
     return eval_result['final response']
@@ -204,5 +204,6 @@ for step in workflow_steps:
     response_routing_agent = routing_agent.route_user_prompts(step)
     completed_steps.append(response_routing_agent)
     print(f"Routing Agent Output for {step} \n {response_routing_agent}")
-print(completed_steps[-1])
+print ("***************** Printing Completed Stps *****************************")
+print("\n\n".join(completed_steps))
 
